@@ -1,0 +1,139 @@
+import networkx as nx
+import matplotlib.pyplot as plt
+
+# Création du graphe orienté
+G = nx.DiGraph()
+
+# ==========================
+# AJOUT DES NŒUDS
+# ==========================
+
+G.add_node("Quartier Tampouy", type="Quartier")
+
+G.add_node("Maison 1", type="Maison")
+G.add_node("Maison 2", type="Maison")
+
+G.add_node("Fadal", type="Adulte")
+G.add_node("Djemila", type="Adulte")
+G.add_node("Khalilou", type="Enfant")
+G.add_node("Idrissa", type="Adolescent")
+G.add_node("Aboubacar", type="Personne âgée")
+
+G.add_node("École Primaire", type="École")
+G.add_node("Boutique Gouemzy", type="Commerce")
+G.add_node("CSPS Tampouy", type="Centre de santé")
+G.add_node("Route Principale", type="Route")
+
+# ==========================
+# AJOUT DES RELATIONS
+# ==========================
+
+G.add_edge("Maison 1", "Quartier Tampouy", relation="EST_DANS")
+G.add_edge("Maison 2", "Quartier Tampouy", relation="EST_DANS")
+
+G.add_edge("Fadal", "Maison 1", relation="HABITE")
+G.add_edge("Djemila", "Maison 1", relation="HABITE")
+G.add_edge("Khalilou", "Maison 1", relation="HABITE")
+
+G.add_edge("Aboubacar", "Maison 2", relation="HABITE")
+G.add_edge("Idrissa", "Maison 2", relation="HABITE")
+
+G.add_edge("Khalilou", "École Primaire", relation="FRÉQUENTE")
+G.add_edge("Idrissa", "École Primaire", relation="FRÉQUENTE")
+
+G.add_edge("Fadal", "Boutique Gouemzy", relation="TRAVAILLE_DANS")
+
+G.add_edge("Aboubacar", "CSPS Tampouy", relation="SE_SOIGNE_À")
+
+G.add_edge("Boutique Gouemzy", "Route Principale", relation="EST_SITUÉ_SUR")
+G.add_edge("CSPS Tampouy", "Route Principale", relation="EST_SITUÉ_SUR")
+
+# ==========================
+# COULEURS DES NŒUDS
+# ==========================
+
+color_map = []
+
+for node in G.nodes():
+    t = G.nodes[node].get("type", "Autre")
+
+    if t == "Quartier":
+        color_map.append("orange")
+    elif t == "Maison":
+        color_map.append("lightgreen")
+    elif t in ["Adulte", "Enfant", "Adolescent", "Personne âgée"]:
+        color_map.append("skyblue")
+    elif t == "École":
+        color_map.append("yellow")
+    elif t == "Commerce":
+        color_map.append("violet")
+    elif t == "Centre de santé":
+        color_map.append("tomato")
+    elif t == "Route":
+        color_map.append("lightgray")
+    else:
+        color_map.append("white")
+
+# ==========================
+# POSITION DES NŒUDS
+# ==========================
+
+pos = {
+    "Route Principale": (0, 6),
+
+    "Quartier Tampouy": (0, 4),
+
+    "Maison 1": (-2.5, 2),
+    "Maison 2": (2.5, 2),
+
+    "Fadal": (-3.5, 0),
+    "Djemila": (-2.2, -1),
+    "Khalilou": (-1, 0),
+
+    "Aboubacar": (1, 0),
+    "Idrissa": (3.5, 0),
+
+    "École Primaire": (0, -3),
+
+    "Boutique Gouemzy": (-6, 2),
+    "CSPS Tampouy": (6, 2)
+}
+
+# ==========================
+# AFFICHAGE
+# ==========================
+
+plt.figure(figsize=(15, 10))
+
+nx.draw(
+    G,
+    pos,
+    with_labels=True,
+    node_color=color_map,
+    node_size=3200,
+    edgecolors="black",
+    linewidths=2,
+    font_size=10,
+    font_weight="bold",
+    arrows=True,
+    arrowsize=20
+)
+
+edge_labels = nx.get_edge_attributes(G, "relation")
+
+nx.draw_networkx_edge_labels(
+    G,
+    pos,
+    edge_labels=edge_labels,
+    font_size=8,
+    bbox=dict(facecolor="white", edgecolor="none", alpha=0.8)
+)
+
+plt.title(
+    "Graphe de connaissances du quartier Tampouy",
+    fontsize=16,
+    fontweight="bold"
+)
+
+plt.axis("off")
+plt.show()
