@@ -98,9 +98,9 @@ Les technologies utilisées sont laissées au choix des étudiants (par exemple 
 
 Projet réalisé dans le cadre d'un devoir académique.
 
+---
 
-
-🏘️ Domaine choisi : Un quartier
+## 🏘️ Domaine choisi : Un quartier
 Description
 
 Nous avons choisi comme domaine d'étude un quartier, car il représente un environnement de vie dans lequel de nombreuses personnes, lieux et services interagissent au quotidien. Ce domaine offre une grande diversité d'entités et de relations, ce qui en fait un excellent exemple pour la construction d'un graphe de connaissances.
